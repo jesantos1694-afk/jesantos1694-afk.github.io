@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jake Errol Santos — Automation Architect</title>
+<meta name="description" content="I fix broken business systems and build automation infrastructure that scales. 60+ clients worldwide.">
+<meta property="og:title" content="Jake Errol Santos — Automation Architect">
+<meta property="og:description" content="Workflow architecture, CRM integrations, data hygiene, and AI-powered automation. 60+ international clients.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jakeerrol.github.io">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23F97316' rx='18' width='100' height='100'/><text y='72' x='50' text-anchor='middle' font-size='55' font-family='system-ui' font-weight='800' fill='%23FFF'>JS</text></svg>">
+<style>
+/* ===== THEME VARIABLES ===== */
+[data-theme="light"]{
+  --bg:#FFFFFF;--bg-alt:#F9FAFB;--bg-card:#FFFFFF;--bg-card-h:#FAFAFA;
+  --text:#111827;--text-s:#6B7280;--text-t:#9CA3AF;
+  --border:#E5E7EB;--border-s:#F3F4F6;--border-h:#D1D5DB;
+  --orange:#F97316;--orange-l:#FFF7ED;--orange-b:rgba(249,115,22,.15);
+  --nav-bg:rgba(255,255,255,.85);--code-bg:#F3F4F6;--glow:rgba(249,115,22,.06);
+}
+[data-theme="dark"]{
+  --bg:#09090B;--bg-alt:#111113;--bg-card:#16161A;--bg-card-h:#1E1E24;
+  --text:#F9FAFB;--text-s:#A1A1AA;--text-t:#52525B;
+  --border:rgba(255,255,255,.08);--border-s:rgba(255,255,255,.04);--border-h:rgba(255,255,255,.14);
+  --orange:#FB923C;--orange-l:rgba(251,146,60,.08);--orange-b:rgba(251,146,60,.2);
+  --nav-bg:rgba(9,9,11,.8);--code-bg:#1E1E24;--glow:rgba(251,146,60,.04);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .4s,color .4s;}
+::selection{background:var(--orange);color:#fff;}
+.sr{font-family:'DM Serif Display',Georgia,serif;}
+.mn{font-family:'IBM Plex Mono',monospace;}
+
+/* SCROLL PROGRESS */
+#progress{position:fixed;top:0;left:0;height:2px;background:var(--orange);z-index:200;width:0;transition:none;}
+
+/* CURSOR GLOW */
+#glow{position:fixed;width:400px;height:400px;border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(circle,var(--glow),transparent 70%);transform:translate(-50%,-50%);
+  transition:opacity .3s;opacity:0;}
+body:hover #glow{opacity:1;}
+
+/* GRID */
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(var(--border-s) 1px,transparent 1px),linear-gradient(90deg,var(--border-s) 1px,transparent 1px);
+  background-size:48px 48px;opacity:.5;transition:opacity .4s;}
+
+.page{position:relative;z-index:1;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;padding:0 2rem;
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:background .4s;}
+.nav-l{display:flex;align-items:center;gap:.6rem;}
+.nav-mark{font-weight:700;font-size:.92rem;letter-spacing:-.02em;}
+.nav-r{display:flex;align-items:center;gap:.15rem;}
+.nav-r a,.theme-btn{font-size:.78rem;color:var(--text-s);text-decoration:none;padding:.35rem .65rem;border-radius:6px;transition:all .2s;cursor:pointer;border:none;background:none;font-family:inherit;}
+.nav-r a:hover,.theme-btn:hover{color:var(--text);background:var(--border-s);}
+.nav-cta{background:var(--text)!important;color:var(--bg)!important;border-radius:8px!important;font-weight:600!important;}
+.nav-cta:hover{opacity:.85!important;}
+
+/* HERO */
+.hero{max-width:1060px;margin:0 auto;padding:9rem 2rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
+.hero-text h1{font-size:clamp(2.4rem,4.5vw,3.6rem);line-height:1.08;letter-spacing:-.03em;margin-bottom:1.25rem;}
+.hero-text h1 .hl{color:var(--orange);}
+.hero-text p{font-size:1.05rem;color:var(--text-s);max-width:480px;line-height:1.75;margin-bottom:2rem;}
+.hero-btns{display:flex;gap:.5rem;flex-wrap:wrap;}
+.hero-btns a{font-size:.85rem;font-weight:600;padding:.65rem 1.4rem;border-radius:10px;text-decoration:none;transition:all .25s;}
+.bd{background:var(--text);color:var(--bg);}.bd:hover{opacity:.85;transform:translateY(-1px);}
+.bl{border:1px solid var(--border);color:var(--text);}.bl:hover{border-color:var(--orange-b);color:var(--orange);}
+
+/* TERMINAL */
+.terminal{background:var(--code-bg);border:1px solid var(--border);border-radius:14px;overflow:hidden;font-family:'IBM Plex Mono',monospace;font-size:.72rem;transition:background .4s,border-color .4s;}
+.term-bar{height:36px;background:var(--border-s);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 .75rem;gap:.4rem;transition:background .4s;}
+.term-dot{width:8px;height:8px;border-radius:50%;}
+.term-body{padding:1rem 1.25rem;min-height:220px;line-height:1.85;color:var(--text-s);}
+.term-line{opacity:0;transform:translateY(4px);}
+.term-line.vis{opacity:1;transform:translateY(0);transition:all .3s;}
+.t-green{color:#22C55E;}.t-orange{color:var(--orange);}.t-dim{color:var(--text-t);}
+.cursor-blink{display:inline-block;width:7px;height:14px;background:var(--orange);animation:cblink 1s infinite;vertical-align:middle;margin-left:2px;}
+@keyframes cblink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+/* MARQUEE */
+.mq-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.25rem 0;overflow:hidden;transition:border-color .4s;}
+.mq-label{text-align:center;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-t);margin-bottom:.75rem;}
+.mq{display:flex;width:max-content;animation:mqscroll 35s linear infinite;}
+.mq:hover{animation-play-state:paused;}
+@keyframes mqscroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.mqi{flex-shrink:0;padding:0 1.5rem;font-size:.85rem;font-weight:500;color:var(--text-t);white-space:nowrap;transition:color .2s;}
+.mqi:hover{color:var(--orange);}
+.mqd{color:var(--orange);padding:0 .6rem;opacity:.25;font-size:.5rem;}
+
+/* STATS */
+.stats-box{max-width:960px;margin:2.5rem auto;border:1px solid var(--border);border-radius:14px;display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden;transition:border-color .4s;}
+.stat{padding:1.5rem;text-align:center;border-right:1px solid var(--border);transition:border-color .4s;}
+.stat:last-child{border-right:none;}
+.stat-v{font-size:2.2rem;font-weight:700;line-height:1;letter-spacing:-.02em;}
+.stat-l{font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-t);margin-top:.3rem;}
+
+/* SECTIONS */
+section{padding:5rem 2rem;max-width:960px;margin:0 auto;}
+.sl{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-t);font-weight:600;margin-bottom:.5rem;}
+.sh{font-size:clamp(1.6rem,3vw,2.2rem);line-height:1.15;letter-spacing:-.015em;margin-bottom:2.5rem;max-width:500px;}
+
+/* PROCESS */
+.proc-g{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.proc{background:var(--bg-card);padding:1.75rem 1.25rem;transition:all .3s;position:relative;overflow:hidden;}
+.proc:hover{background:var(--bg-card-h);}
+.proc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);transform:scaleX(0);transition:transform .4s;transform-origin:left;}
+.proc:hover::before{transform:scaleX(1);}
+.proc-n{font-size:1.6rem;font-weight:300;color:var(--orange);opacity:.4;margin-bottom:.5rem;}
+.proc h3{font-size:.95rem;font-weight:700;margin-bottom:.35rem;}
+.proc p{font-size:.8rem;color:var(--text-s);line-height:1.6;}
+
+/* FEATURE ROWS */
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;margin-bottom:4rem;}
+.fr.rev{direction:rtl;}.fr.rev>*{direction:ltr;}
+.fr h3{font-size:1.5rem;line-height:1.2;letter-spacing:-.01em;margin-bottom:.5rem;}
+.fr p{font-size:.9rem;color:var(--text-s);line-height:1.7;}
+.fi{width:28px;height:28px;color:var(--orange);margin-bottom:.75rem;}
+.fv{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;position:relative;overflow:hidden;min-height:200px;
+  background-image:linear-gradient(var(--border-s) 1px,transparent 1px),linear-gradient(90deg,var(--border-s) 1px,transparent 1px);background-size:28px 28px;transition:all .4s;}
+.fv-blob{position:absolute;width:180px;height:180px;border-radius:50%;background:var(--orange);bottom:-50px;right:-30px;opacity:.85;}
+[data-theme="dark"] .fv-blob{opacity:.3;}
+.fv-card{position:relative;z-index:2;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow,0 2px 8px rgba(0,0,0,.04));padding:.85rem 1rem;max-width:260px;animation:cfloat 5s ease-in-out infinite;transition:all .4s;}
+@keyframes cfloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+
+/* SYSTEM MAP */
+.sysmap{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:2rem;margin:2rem 0;overflow:hidden;position:relative;transition:all .4s;}
+.sysmap svg{width:100%;height:auto;}
+.sysmap .node{cursor:pointer;transition:all .3s;}
+.sysmap .node:hover rect{stroke:var(--orange);stroke-width:2;}
+.sysmap .node:hover text.nn{fill:var(--orange);}
+.sysmap .conn{stroke:var(--border);stroke-width:1;transition:stroke .3s;}
+.sysmap:hover .conn{stroke:var(--orange);opacity:.3;}
+
+/* CASES */
+.cases{display:flex;flex-direction:column;gap:.6rem;}
+.case{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:2rem;transition:all .3s;cursor:pointer;}
+.case:hover{border-color:var(--border-h);box-shadow:0 8px 24px rgba(0,0,0,.05);transform:translateY(-2px);}
+.case-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:.4rem;}
+.case-top h3{font-size:1.15rem;font-weight:700;}
+.cpill{font-size:.56rem;letter-spacing:.04em;text-transform:uppercase;color:var(--orange);background:var(--orange-l);border:1px solid var(--orange-b);padding:.2rem .55rem;border-radius:100px;}
+.case>p{color:var(--text-s);font-size:.85rem;line-height:1.7;}
+.cm-row{display:flex;gap:2rem;margin-top:.75rem;flex-wrap:wrap;}
+.cm .cv{font-size:1.4rem;font-weight:700;line-height:1;}
+.cm .cl{font-size:.52rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-t);margin-top:.15rem;}
+.case-arr{font-size:.7rem;color:var(--text-t);margin-top:.75rem;display:flex;align-items:center;gap:.3rem;transition:all .25s;}
+.case:hover .case-arr{color:var(--orange);gap:.5rem;}
+.cd{display:none;background:var(--bg-alt);border:1px solid var(--border);border-top:none;border-radius:0 0 12px 12px;margin-top:-.6rem;padding:2rem;animation:sld .3s ease;}
+.cd.open{display:block;}
+@keyframes sld{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+.cd-lb{font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);font-weight:600;margin:1.5rem 0 .4rem;}
+.cd-lb:first-child{margin-top:0;}
+.cd-p{font-size:.88rem;color:var(--text-s);line-height:1.8;}.cd-p strong{color:var(--text);font-weight:600;}
+.diag{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin:1rem 0;overflow-x:auto;position:relative;transition:all .4s;}
+.diag svg{width:100%;height:auto;}
+.an{opacity:0;animation:ni .4s forwards;}.al{stroke-dasharray:200;stroke-dashoffset:200;animation:dl .5s forwards;}
+@keyframes ni{to{opacity:1;}}@keyframes dl{to{stroke-dashoffset:0;}}
+.cd-res{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:1rem 0;}
+.cd-r{background:var(--bg-card);padding:1rem;text-align:center;transition:background .4s;}
+.cd-r .v{font-size:1.6rem;font-weight:700;line-height:1;}
+.cd-r .l{font-size:.52rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-t);margin-top:.2rem;}
+
+/* ESSAY */
+.essay{max-width:640px;}
+.essay p{font-size:1rem;color:var(--text-s);line-height:1.9;margin-bottom:1rem;}
+.essay p:first-of-type::first-letter{font-size:2.5rem;font-family:'DM Serif Display',serif;float:left;margin-right:.5rem;line-height:1;color:var(--orange);}
+.essay blockquote{border-left:3px solid var(--orange);padding-left:1.25rem;margin:1.5rem 0;font-style:italic;color:var(--text);font-size:1.05rem;}
+
+/* BLOG */
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;}
+.blog-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:all .3s;}
+.blog-card:hover{border-color:var(--orange-b);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.05);}
+.blog-tag{font-size:.55rem;letter-spacing:.06em;text-transform:uppercase;color:var(--orange);font-weight:600;margin-bottom:.5rem;}
+.blog-card h3{font-size:1rem;font-weight:700;margin-bottom:.4rem;line-height:1.3;}
+.blog-card p{font-size:.8rem;color:var(--text-s);line-height:1.6;}
+
+/* AVAILABLE FOR */
+.avail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.6rem;}
+.avail{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;text-align:center;transition:all .3s;}
+.avail:hover{border-color:var(--orange-b);background:var(--orange-l);}
+.avail h3{font-size:.95rem;font-weight:700;margin-bottom:.25rem;}
+.avail p{font-size:.75rem;color:var(--text-s);}
+
+/* STACK */
+.stk-wrap{display:flex;flex-wrap:wrap;gap:.3rem;}
+.stk{font-size:.68rem;padding:.35rem .7rem;border:1px solid var(--border);border-radius:6px;color:var(--text-s);background:var(--bg-card);transition:all .2s;}
+.stk:hover{border-color:var(--orange-b);color:var(--orange);background:var(--orange-l);}
+.stk-cat{font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);font-weight:600;margin-bottom:.4rem;margin-top:1.5rem;}
+.stk-cat:first-child{margin-top:0;}
+
+/* CERTS */
+.cert-feat{background:var(--orange-l);border:1px solid var(--orange-b);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:.6rem;display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;transition:all .4s;}
+.cert-feat-icon{width:44px;height:44px;background:var(--bg-card);border:1px solid var(--orange-b);border-radius:10px;display:grid;place-items:center;flex-shrink:0;}
+.cert-feat-info{flex:1;min-width:180px;}
+.cert-feat-tag{font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);font-weight:600;}
+.cert-feat-name{font-size:1rem;font-weight:700;}
+.cert-feat-sub{font-size:.78rem;color:var(--text-s);}
+.cert-link{font-size:.7rem;font-weight:500;color:var(--orange);text-decoration:none;padding:.4rem .9rem;border:1px solid var(--orange-b);border-radius:8px;background:var(--bg-card);transition:all .2s;white-space:nowrap;}
+.cert-link:hover{background:var(--orange);color:#fff;}
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.5rem;}
+.cert{border:1px solid var(--border);border-radius:10px;padding:1rem;background:var(--bg-card);display:flex;align-items:center;gap:.75rem;transition:all .2s;}
+.cert:hover{border-color:var(--orange-b);}
+.cert-icon{width:32px;height:32px;background:var(--orange-l);border:1px solid var(--orange-b);border-radius:8px;display:grid;place-items:center;flex-shrink:0;}
+.cert strong{font-size:.82rem;display:block;}.cert span{font-size:.6rem;color:var(--text-t);}
+
+/* CONTACT FORM */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
+.form-group{margin-bottom:1rem;}
+.form-group label{display:block;font-size:.72rem;font-weight:600;margin-bottom:.3rem;color:var(--text);}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:.65rem .85rem;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:.85rem;background:var(--bg-card);color:var(--text);transition:all .2s;outline:none;}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-l);}
+.form-group textarea{resize:vertical;min-height:100px;}
+.form-submit{background:var(--text);color:var(--bg);border:none;padding:.7rem 1.5rem;border-radius:10px;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit;}
+.form-submit:hover{opacity:.85;transform:translateY(-1px);}
+.contact-info h3{font-size:1.3rem;margin-bottom:.5rem;}
+.contact-info p{color:var(--text-s);font-size:.9rem;line-height:1.7;margin-bottom:1.5rem;}
+.contact-links{display:flex;flex-direction:column;gap:.5rem;}
+.contact-links a{font-size:.85rem;color:var(--text);text-decoration:none;padding:.6rem 1rem;border:1px solid var(--border);border-radius:8px;transition:all .2s;display:flex;align-items:center;gap:.5rem;}
+.contact-links a:hover{border-color:var(--orange-b);color:var(--orange);}
+
+/* FOOTER */
+footer{text-align:center;padding:2rem;font-size:.62rem;color:var(--text-t);border-top:1px solid var(--border);}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .5s cubic-bezier(.22,1,.36,1),transform .5s cubic-bezier(.22,1,.36,1);}
+.rv.v{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  nav{padding:0 1rem;}.nav-r a{font-size:.68rem;padding:.3rem .4rem;}.theme-btn span{display:none;}
+  .hero{grid-template-columns:1fr;padding:7rem 1.25rem 2rem;}.terminal{margin-top:1.5rem;}
+  section{padding:3rem 1.25rem;}
+  .stats-box{grid-template-columns:repeat(2,1fr);margin:1.5rem 1.25rem;}
+  .proc-g{grid-template-columns:repeat(2,1fr);}
+  .fr,.fr.rev{grid-template-columns:1fr;direction:ltr;gap:1.5rem;}
+  .contact-grid{grid-template-columns:1fr;}
+  .blog-grid{grid-template-columns:1fr;}
+}
+@media(max-width:480px){.proc-g{grid-template-columns:1fr;}.avail-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div id="glow"></div>
+<div class="grid-bg"></div>
+<div class="page">
+
+<!-- NAV -->
+<nav>
+  <div class="nav-l"><span class="nav-mark">Jake Santos</span></div>
+  <div class="nav-r">
+    <a href="#services">Solutions</a>
+    <a href="#work">Work</a>
+    <a href="#thinking">Thinking</a>
+    <a href="#stack">Stack</a>
+    <button class="theme-btn mn" onclick="toggleTheme()" aria-label="Toggle theme">
+      <span>Theme</span> <span id="theme-icon">&#9789;</span>
+    </button>
+    <a href="#contact" class="nav-cta">Get in Touch</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text" style="opacity:0;animation:fadeUp .5s .15s forwards;">
+    <h1 class="sr">The future of your operations starts with <span class="hl">systems that work.</span></h1>
+    <p>I design and stabilize automation infrastructure across CRMs, workflows, and business-critical integrations &mdash; so your team can stop firefighting and start scaling.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="bd">Get in Touch</a>
+      <a href="#work" class="bl">View Case Studies</a>
+    </div>
+  </div>
+  <div class="terminal" style="opacity:0;animation:fadeUp .5s .4s forwards;" id="terminal">
+    <div class="term-bar"><div class="term-dot" style="background:#FF5F57;"></div><div class="term-dot" style="background:#FEBC2E;"></div><div class="term-dot" style="background:#28C840;"></div><span class="mn" style="margin-left:.5rem;font-size:.6rem;color:var(--text-t);">workflow-engine</span></div>
+    <div class="term-body mn" id="term-body"></div>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="mq-wrap mn">
+  <div class="mq-label">Trusted Stack</div>
+  <div style="overflow:hidden;"><div class="mq">
+    <span class="mqi">Zapier</span><span class="mqd">&bull;</span><span class="mqi">Make.com</span><span class="mqd">&bull;</span><span class="mqi">n8n</span><span class="mqd">&bull;</span><span class="mqi">HubSpot</span><span class="mqd">&bull;</span><span class="mqi">Airtable</span><span class="mqd">&bull;</span><span class="mqi">Salesforce</span><span class="mqd">&bull;</span><span class="mqi">OpenAI API</span><span class="mqd">&bull;</span><span class="mqi">Claude AI</span><span class="mqd">&bull;</span><span class="mqi">Python</span><span class="mqd">&bull;</span><span class="mqi">Webhooks</span><span class="mqd">&bull;</span><span class="mqi">Shopify</span><span class="mqd">&bull;</span><span class="mqi">Stripe</span><span class="mqd">&bull;</span><span class="mqi">Slack</span><span class="mqd">&bull;</span><span class="mqi">WordPress</span><span class="mqd">&bull;</span><span class="mqi">Pipedrive</span><span class="mqd">&bull;</span>
+    <span class="mqi">Zapier</span><span class="mqd">&bull;</span><span class="mqi">Make.com</span><span class="mqd">&bull;</span><span class="mqi">n8n</span><span class="mqd">&bull;</span><span class="mqi">HubSpot</span><span class="mqd">&bull;</span><span class="mqi">Airtable</span><span class="mqd">&bull;</span><span class="mqi">Salesforce</span><span class="mqd">&bull;</span><span class="mqi">OpenAI API</span><span class="mqd">&bull;</span><span class="mqi">Claude AI</span><span class="mqd">&bull;</span><span class="mqi">Python</span><span class="mqd">&bull;</span><span class="mqi">Webhooks</span><span class="mqd">&bull;</span><span class="mqi">Shopify</span><span class="mqd">&bull;</span><span class="mqi">Stripe</span><span class="mqd">&bull;</span><span class="mqi">Slack</span><span class="mqd">&bull;</span><span class="mqi">WordPress</span><span class="mqd">&bull;</span><span class="mqi">Pipedrive</span><span class="mqd">&bull;</span>
+  </div></div>
+</div>
+
+<!-- STATS -->
+<div class="stats-box rv mn">
+  <div class="stat"><div class="stat-v"><span class="counter" data-target="60">0</span>+</div><div class="stat-l">Clients Worldwide</div></div>
+  <div class="stat"><div class="stat-v"><span class="counter" data-target="5000">0</span>+</div><div class="stat-l">Records Monthly</div></div>
+  <div class="stat"><div class="stat-v"><span class="counter" data-target="99">0</span>%</div><div class="stat-l">Workflow Uptime</div></div>
+  <div class="stat"><div class="stat-v"><span class="counter" data-target="9">0</span>yr</div><div class="stat-l">In Production</div></div>
+</div>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="sl mn rv">How I Work</div>
+  <div class="proc-g rv">
+    <div class="proc"><div class="proc-n mn">01</div><h3>Audit</h3><p>Map tools, workflows, data flows. Find where things break, duplicate, or leak time.</p></div>
+    <div class="proc"><div class="proc-n mn">02</div><h3>Design</h3><p>Architect the system. Define routing, validation, error handling, integration points.</p></div>
+    <div class="proc"><div class="proc-n mn">03</div><h3>Build</h3><p>Implement with Zapier, Make, or n8n. Connect APIs, configure webhooks, validate data.</p></div>
+    <div class="proc"><div class="proc-n mn">04</div><h3>Monitor</h3><p>Deploy with alerts, logging, and fallback paths. Built to run without babysitting.</p></div>
+  </div>
+</section>
+
+<!-- SOLUTIONS -->
+<section id="services">
+  <div class="sl mn rv">Solutions</div>
+  <div class="sh rv sr">Whatever the operations challenge, I've got you covered.</div>
+  <div class="fr rv"><div><svg class="fi" viewBox="0 0 28 28" fill="none"><path d="M14 3v7l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="14" cy="14" r="11" stroke="currentColor" stroke-width="2"/></svg><h3>Workflows that stay running</h3><p>End-to-end automation. Intake to routing, lead capture to reporting. Built for production reliability, not demos.</p></div><div class="fv"><div class="fv-blob"></div><div class="fv-card mn" style="font-size:.7rem;"><div style="color:var(--orange);font-size:.55rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.4rem;">&#9679; Execution Log</div><div style="font-weight:600;color:var(--text);">Intake &rarr; Route &rarr; CRM &rarr; Notify</div><div style="color:var(--text-t);margin-top:.15rem;">Completed &middot; 0 errors &middot; 1.2s</div></div></div></div>
+  <div class="fr rev rv"><div><svg class="fi" viewBox="0 0 28 28" fill="none"><path d="M7 14h14M14 7v14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><h3>Clean data, zero duplicates</h3><p>Duplicate prevention, field standardization, create/update logic. Your CRM reflects reality instead of generating noise.</p></div><div class="fv"><div class="fv-blob"></div><div class="fv-card mn" style="font-size:.7rem;"><div style="color:var(--orange);font-size:.55rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.4rem;">&#9679; Dedup Report</div><div style="font-weight:600;color:var(--text);">Records scanned: 5,247</div><div style="color:var(--text-t);margin-top:.15rem;">Blocked: 312 &middot; Accuracy: 99.9%</div></div></div></div>
+  <div class="fr rv"><div><svg class="fi" viewBox="0 0 28 28" fill="none"><path d="M5 23L14 5l9 18H5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="14" cy="18" r="1" fill="currentColor"/><path d="M14 11v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><h3>AI that plugs into real work</h3><p>AI agents for lead categorization, response drafting, data processing. Practical automation inside existing workflows.</p></div><div class="fv"><div class="fv-blob"></div><div class="fv-card mn" style="font-size:.7rem;"><div style="color:var(--orange);font-size:.55rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.4rem;">&#9679; AI Agent</div><div style="font-weight:600;color:var(--text);">Inbound lead categorized</div><div style="color:var(--text-t);margin-top:.15rem;">Response drafted &middot; Routed &middot; 0.8s</div></div></div></div>
+</section>
+
+<!-- CASE STUDIES -->
+<section id="work">
+  <div class="sl mn rv">Case Studies</div>
+  <div class="sh rv sr">Real operations problems, solved.</div>
+  <div class="cases" id="cases">
+    <div class="case rv" data-case="yao"><div class="case-top"><h3>Yao Law Group</h3><span class="cpill mn">Legal Ops</span></div><p>Built complete intake-to-case workflow &mdash; routing, notifications, status tracking across 10+ team members.</p><div class="cm-row"><div class="cm"><div class="cv">30+</div><div class="cl mn">Hrs saved / wk</div></div><div class="cm"><div class="cv">99%</div><div class="cl mn">Uptime</div></div><div class="cm"><div class="cv">10+</div><div class="cl mn">Team members</div></div></div><div class="case-arr mn">View case study &rarr;</div></div>
+    <div class="cd" id="yao"><div class="cd-lb mn">The Situation</div><p class="cd-p">A growing law firm routed every case manually. <strong>30+ hours/week</strong> in admin overhead. Cases falling through cracks.</p><div class="cd-lb mn">What I Built</div><p class="cd-p">Full automated intake: form triggers validation, conditional routing by case type and urgency, auto CRM records, Slack + email notifications. <strong>99% uptime</strong> with error handling and fallback paths.</p><div class="cd-lb mn">Architecture</div><div class="diag"><svg viewBox="0 0 700 80"><defs><marker id="a1" viewBox="0 0 10 7" refX="9" refY="3.5" markerWidth="7" markerHeight="5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="var(--orange)"/></marker></defs><rect class="an" style="animation-delay:.1s" x="10" y="15" width="95" height="45" rx="8" fill="var(--bg-card)" stroke="var(--border)"/><text x="57" y="35" text-anchor="middle" fill="var(--text-t)" font-family="IBM Plex Mono" font-size="7.5" letter-spacing=".5">INTAKE</text><text x="57" y="48" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="600">Web Form</text><line class="al" style="animation-delay:.3s" x1="105" y1="37" x2="138" y2="37" stroke="var(--orange)" stroke-width="1.5" marker-end="url(#a1)"/><rect class="an" style="animation-delay:.35s" x="138" y="15" width="105" height="45" rx="8" fill="var(--orange-l)" stroke="var(--orange-b)"/><text x="190" y="35" text-anchor="middle" fill="var(--orange)" font-family="IBM Plex Mono" font-size="7.5">VALIDATE</text><text x="190" y="48" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="600">Parse</text><line class="al" style="animation-delay:.55s" x1="243" y1="37" x2="276" y2="37" stroke="var(--orange)" stroke-width="1.5" marker-end="url(#a1)"/><rect class="an" style="animation-delay:.6s" x="276" y="15" width="95" height="45" rx="8" fill="var(--orange-l)" stroke="var(--orange-b)"/><text x="323" y="35" text-anchor="middle" fill="var(--orange)" font-family="IBM Plex Mono" font-size="7.5">ROUTE</text><text x="323" y="48" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="600">Auto-Assign</text><line class="al" style="animation-delay:.8s" x1="371" y1="37" x2="404" y2="37" stroke="var(--orange)" stroke-width="1.5" marker-end="url(#a1)"/><rect class="an" style="animation-delay:.85s" x="404" y="15" width="95" height="45" rx="8" fill="var(--bg-card)" stroke="var(--border)"/><text x="451" y="35" text-anchor="middle" fill="var(--text-t)" font-family="IBM Plex Mono" font-size="7.5">CRM</text><text x="451" y="48" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="600">Create</text><line class="al" style="animation-delay:1.05s" x1="499" y1="37" x2="532" y2="37" stroke="var(--orange)" stroke-width="1.5" marker-end="url(#a1)"/><rect class="an" style="animation-delay:1.1s" x="532" y="15" width="110" height="45" rx="8" fill="var(--bg-card)" stroke="var(--border)"/><text x="587" y="35" text-anchor="middle" fill="var(--text-t)" font-family="IBM Plex Mono" font-size="7.5">NOTIFY</text><text x="587" y="48" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="600">Slack + Email</text></svg></div><div class="cd-res"><div class="cd-r"><div class="v">30+</div><div class="l mn">Hrs / week saved</div></div><div class="cd-r"><div class="v">99%</div><div class="l mn">Uptime</div></div><div class="cd-r"><div class="v">0</div><div class="l mn">Manual routing</div></div></div></div>
+
+    <div class="case rv" data-case="tb"><div class="case-top"><h3>TransBiz</h3><span class="cpill mn">CRM &middot; Ecommerce</span></div><p>Redesigned CRM deal logic and webhook payload mapping. Eliminated duplicates across 5+ platforms.</p><div class="cm-row"><div class="cm"><div class="cv">90%</div><div class="cl mn">Fewer dupes</div></div><div class="cm"><div class="cv">99.9%</div><div class="cl mn">Accuracy</div></div><div class="cm"><div class="cv">15+</div><div class="cl mn">Hrs saved / wk</div></div></div><div class="case-arr mn">View case study &rarr;</div></div>
+    <div class="cd" id="tb"><div class="cd-lb mn">The Situation</div><p class="cd-p"><strong>Three automations writing to CRM</strong> without dedup checks. Webhooks breaking on nested JSON. 15+ hrs/week fixing records.</p><div class="cd-lb mn">What I Built</div><p class="cd-p">Unified flow with lookup-before-create. Standardized WooCommerce webhook transforms. Synchronized data across Sheets, Airtable, Slack into <strong>one source of truth.</strong></p><div class="cd-res"><div class="cd-r"><div class="v">90%</div><div class="l mn">Fewer dupes</div></div><div class="cd-r"><div class="v">99.9%</div><div class="l mn">Accuracy</div></div><div class="cd-r"><div class="v">15+</div><div class="l mn">Hrs saved</div></div></div></div>
+
+    <div class="case rv" data-case="zen"><div class="case-top"><h3>Zensite</h3><span class="cpill mn">Architecture</span></div><p>Merged 12 fragmented Make.com scenarios into one scalable workflow.</p><div class="cm-row"><div class="cm"><div class="cv">60%</div><div class="cl mn">Fewer API calls</div></div><div class="cm"><div class="cv">95%</div><div class="cl mn">Fewer failures</div></div></div><div class="case-arr mn">View case study &rarr;</div></div>
+    <div class="cd" id="zen"><div class="cd-lb mn">The Situation</div><p class="cd-p"><strong>12 overlapping scenarios.</strong> Nobody knew which was real. API limits burned daily. Failures unnoticed.</p><div class="cd-lb mn">What I Built</div><p class="cd-p">One workflow: conditional routing, centralized validation, strict error catching. <strong>Chaos to production-grade in 6 weeks.</strong></p><div class="cd-res"><div class="cd-r"><div class="v">60%</div><div class="l mn">Fewer calls</div></div><div class="cd-r"><div class="v">95%</div><div class="l mn">Fewer failures</div></div><div class="cd-r"><div class="v">0</div><div class="l mn">Duplicates</div></div></div></div>
+
+    <div class="case rv" data-case="boost"><div class="case-top"><h3>Boost Education</h3><span class="cpill mn">Marketing</span></div><p>50+ Zaps, 150+ actions. Offline conversion tracking and UTM attribution.</p><div class="cm-row"><div class="cm"><div class="cv">50+</div><div class="cl mn">Zaps</div></div><div class="cm"><div class="cv">40%</div><div class="cl mn">Better tracking</div></div></div><div class="case-arr mn">View case study &rarr;</div></div>
+    <div class="cd" id="boost"><div class="cd-lb mn">Problem</div><p class="cd-p">No attribution. UTM data lost. <strong>Budget decisions were guesswork.</strong></p><div class="cd-lb mn">Solution</div><p class="cd-p">Complete pipeline: UTM preserved from click to registration. Offline conversions reported to Google Ads. CallRail phone attribution integrated.</p><div class="cd-res"><div class="cd-r"><div class="v">50+</div><div class="l mn">Zaps</div></div><div class="cd-r"><div class="v">150+</div><div class="l mn">Actions</div></div><div class="cd-r"><div class="v">40%</div><div class="l mn">Better tracking</div></div></div></div>
+
+    <div class="case rv" data-case="qv"><div class="case-top"><h3>QV Motors</h3><span class="cpill mn">Recovery</span></div><p>Rebuilt broken automations. Repaired connections, simplified architecture, added Python validation.</p><div class="cm-row"><div class="cm"><div class="cv">40%</div><div class="cl mn">Fewer failures</div></div><div class="cm"><div class="cv">3x</div><div class="cl mn">Faster</div></div></div><div class="case-arr mn">View case study &rarr;</div></div>
+    <div class="cd" id="qv"><div class="cd-lb mn">Problem</div><p class="cd-p">Lead capture <strong>completely stopped.</strong> Expired connections, changed permissions. Everything broke silently.</p><div class="cd-lb mn">Solution</div><p class="cd-p">Repaired all connections. Simplified architecture, <strong>cut failures 40%.</strong> Python validation, 3x faster processing.</p><div class="cd-res"><div class="cd-r"><div class="v">40%</div><div class="l mn">Fewer failures</div></div><div class="cd-r"><div class="v">3x</div><div class="l mn">Faster</div></div><div class="cd-r"><div class="v">100%</div><div class="l mn">Restored</div></div></div></div>
+  </div>
+</section>
+
+<!-- HOW I THINK -->
+<section id="thinking">
+  <div class="sl mn rv">How I Think About Automation</div>
+  <div class="sh rv sr">Most automations fail because nobody plans for failure.</div>
+  <div class="essay rv">
+    <p>Everyone wants to talk about the shiny workflow that saves 20 hours a week. Nobody wants to talk about what happens when it breaks at 2am on a Friday. That gap &mdash; between demo-ready and production-grade &mdash; is where most automation projects die.</p>
+    <p>After building systems for 60+ clients across legal, ecommerce, education, marketing, and SaaS operations, I've learned one thing: <strong>the automation itself is the easy part.</strong> The hard part is data integrity, error recovery, and making sure the system still works six months later when someone changes a field name or an API token expires.</p>
+    <blockquote>The best automation is the one nobody thinks about because it just works.</blockquote>
+    <p>That's why I focus on architecture over cleverness. Validation before writes. Dedup checks before creates. Fallback paths on every critical step. Monitoring that tells you something broke before your client does.</p>
+    <p>AI is making automation more powerful, but it doesn't change the fundamentals. An AI agent that categorizes leads is useless if the data feeding it is full of duplicates. A smart workflow that drafts responses is worthless if the webhook payload mapping drops half the fields. <strong>AI amplifies your system quality &mdash; good or bad.</strong></p>
+    <p>My job is to make sure it amplifies something worth amplifying.</p>
+  </div>
+</section>
+
+<!-- BLOG / INSIGHTS -->
+<section>
+  <div class="sl mn rv">Insights</div>
+  <div class="sh rv sr">Things I've learned building 60+ automation systems.</div>
+  <div class="blog-grid rv">
+    <div class="blog-card"><div class="blog-tag mn">CRM</div><h3>Why your CRM keeps creating duplicates</h3><p>Multiple workflows writing without dedup checks. The fix isn't complicated &mdash; it's just overlooked. Here's the pattern I use for every client.</p></div>
+    <div class="blog-card"><div class="blog-tag mn">Architecture</div><h3>12 scenarios to 1: a Make.com rebuild</h3><p>How I consolidated a fragmented automation setup and cut API calls by 60%. The key was routing logic, not more modules.</p></div>
+    <div class="blog-card"><div class="blog-tag mn">Operations</div><h3>Humans as middleware</h3><p>If someone on your team is manually copying data between two tools, that's a workflow waiting to be automated. Look for the copy-paste.</p></div>
+    <div class="blog-card"><div class="blog-tag mn">Reliability</div><h3>Why automations break at 2am</h3><p>Expired tokens. Changed field names. No error handling. Most workflows aren't built for production &mdash; they're built for demos.</p></div>
+    <div class="blog-card"><div class="blog-tag mn">AI</div><h3>AI agents need clean pipes</h3><p>An AI workflow is only as good as the data feeding it. Duplicate records, missing fields, and broken handoffs poison the output.</p></div>
+  </div>
+</section>
+
+<!-- AVAILABLE FOR -->
+<section>
+  <div class="sl mn rv">Currently Available For</div>
+  <div class="sh rv sr">The right engagement for your needs.</div>
+  <div class="avail-grid rv">
+    <div class="avail"><h3>Full-Time Roles</h3><p>Automation Architect, RevOps Engineer, Business Systems Engineer</p></div>
+    <div class="avail"><h3>Contract Work</h3><p>3-6 month automation builds, system migrations, architecture redesigns</p></div>
+    <div class="avail"><h3>Consulting</h3><p>Workflow audits, CRM cleanup, automation strategy, AI integration planning</p></div>
+    <div class="avail"><h3>Implementation</h3><p>Zapier/Make/n8n builds, API integrations, data migration, webhook systems</p></div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section id="stack">
+  <div class="sl mn rv">Full Stack</div>
+  <div class="rv"><div class="stk-cat mn">AI & LLM Tools</div><div class="stk-wrap"><span class="stk">OpenAI API</span><span class="stk">Claude AI</span><span class="stk">ChatGPT</span><span class="stk">Gemini</span><span class="stk">AI Agents</span><span class="stk">OpenClaw</span><span class="stk">Prompt Engineering</span></div></div>
+  <div class="rv"><div class="stk-cat mn">Workflow Platforms</div><div class="stk-wrap"><span class="stk">Make.com</span><span class="stk">Zapier</span><span class="stk">n8n</span><span class="stk">Power Automate</span><span class="stk">Bubble</span></div></div>
+  <div class="rv"><div class="stk-cat mn">Core Technical</div><div class="stk-wrap"><span class="stk">REST APIs</span><span class="stk">Webhooks</span><span class="stk">JSON</span><span class="stk">OAuth</span><span class="stk">Python</span><span class="stk">Regex</span><span class="stk">Payload Mapping</span><span class="stk">Data Transforms</span></div></div>
+  <div class="rv"><div class="stk-cat mn">CRM & Marketing</div><div class="stk-wrap"><span class="stk">HubSpot</span><span class="stk">Airtable</span><span class="stk">Salesforce</span><span class="stk">Pipedrive</span><span class="stk">Close CRM</span><span class="stk">Copper</span><span class="stk">Zoho</span><span class="stk">Dynamics 365</span><span class="stk">ActiveCampaign</span><span class="stk">Klaviyo</span><span class="stk">Mailchimp</span><span class="stk">Brevo</span><span class="stk">Clay</span><span class="stk">ManyChat</span></div></div>
+  <div class="rv"><div class="stk-cat mn">Data & Reporting</div><div class="stk-wrap"><span class="stk">HEX</span><span class="stk">Google Sheets</span><span class="stk">Excel</span><span class="stk">Airtable</span><span class="stk">Dashboards</span><span class="stk">Deduplication</span></div></div>
+  <div class="rv"><div class="stk-cat mn">Web & Lead Capture</div><div class="stk-wrap"><span class="stk">WordPress</span><span class="stk">Webflow</span><span class="stk">Typeform</span><span class="stk">Jotform</span><span class="stk">Gravity Forms</span><span class="stk">Meta Lead Ads</span><span class="stk">Calendly</span></div></div>
+  <div class="rv"><div class="stk-cat mn">Ecommerce & Billing</div><div class="stk-wrap"><span class="stk">Shopify</span><span class="stk">WooCommerce</span><span class="stk">Stripe</span><span class="stk">PayPal</span><span class="stk">QuickBooks</span><span class="stk">Xero</span></div></div>
+  <div class="rv"><div class="stk-cat mn">Operations</div><div class="stk-wrap"><span class="stk">Slack</span><span class="stk">Discord</span><span class="stk">Google Workspace</span><span class="stk">Twilio</span><span class="stk">CallRail</span><span class="stk">PandaDoc</span><span class="stk">DocuSign</span><span class="stk">Amazon S3</span></div></div>
+
+  <div class="sl mn rv" style="margin-top:3rem;">Verified Certifications</div>
+  <div class="cert-feat rv"><div class="cert-feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.5 5 5.5.8-4 3.9.9 5.3L12 14.5l-4.9 2.5.9-5.3-4-3.9 5.5-.8L12 2z" fill="var(--orange)"/></svg></div><div class="cert-feat-info"><div class="cert-feat-tag mn">Featured &middot; AI</div><div class="cert-feat-name">AI Agent Builder</div><div class="cert-feat-sub">Make.com &middot; Credly Verified</div></div><a href="https://www.credly.com/badges/a90b2868-2f2f-4846-a7b7-fc6b64dbc9cf/linked_in_profile" target="_blank" class="cert-link mn">Verify &rarr;</a></div>
+  <div class="cert-feat rv"><div class="cert-feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="var(--orange)" stroke-width="2"/><path d="M8 12l3 3 5-5" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="cert-feat-info"><div class="cert-feat-tag mn">Featured &middot; AI</div><div class="cert-feat-name">AI Automation Explorer</div><div class="cert-feat-sub">Make.com &middot; Credly Verified</div></div><a href="https://www.credly.com/badges/0ada71dc-35fe-4f67-b1fa-fef2fbd05cd7/linked_in_profile" target="_blank" class="cert-link mn">Verify &rarr;</a></div>
+  <div class="cert-grid rv">
+    <div class="cert"><div class="cert-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 8l2 2 4-4" stroke="var(--orange)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><strong>Make.com Expert</strong><span class="mn">Expert Level</span></div></div>
+    <div class="cert"><div class="cert-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 8l2 2 4-4" stroke="var(--orange)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><strong>Zapier Expert</strong><span class="mn">Certified</span></div></div>
+    <div class="cert"><div class="cert-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 8l2 2 4-4" stroke="var(--orange)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><strong>Airtable Builder</strong><span class="mn">Certified</span></div></div>
+    <div class="cert"><div class="cert-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 8l2 2 4-4" stroke="var(--orange)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><strong>HubSpot</strong><span class="mn">Certified</span></div></div>
+    <div class="cert"><div class="cert-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 8l2 2 4-4" stroke="var(--orange)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><strong>Claude Academy</strong><span class="mn">Anthropic</span></div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sl mn rv">Get Started</div>
+  <div class="sh rv sr">Let's fix your operations.</div>
+  <div class="contact-grid rv">
+    <form action="https://formspree.io/f/placeholder" method="POST" onsubmit="event.preventDefault();this.querySelector('.form-submit').textContent='Message sent!';this.querySelector('.form-submit').disabled=true;">
+      <div class="form-group"><label>Name</label><input type="text" name="name" required placeholder="Your name"></div>
+      <div class="form-group"><label>Email</label><input type="email" name="email" required placeholder="you@company.com"></div>
+      <div class="form-group"><label>What do you need?</label><select name="type"><option>Workflow architecture</option><option>CRM cleanup / dedup</option><option>AI automation</option><option>Full-time hire</option><option>Consulting engagement</option><option>Other</option></select></div>
+      <div class="form-group"><label>Tell me more</label><textarea name="message" placeholder="What's broken? What are you trying to build?"></textarea></div>
+      <button type="submit" class="form-submit">Send Message</button>
+    </form>
+    <div class="contact-info">
+      <h3>Or reach out directly.</h3>
+      <p>I respond within 24 hours. Based in Valencia, Spain &mdash; available for remote work worldwide.</p>
+      <div class="contact-links">
+        <a href="mailto:je.santos1694@gmail.com">&#9993; je.santos1694@gmail.com</a>
+        <a href="https://www.linkedin.com/in/jake-errol-santos/" target="_blank">&#8599; LinkedIn</a>
+        <a href="https://www.upwork.com/freelancers/jakeerrol" target="_blank">&#8599; Upwork</a>
+        <a href="https://wellfound.com/u/jake-santos-1" target="_blank">&#8599; Wellfound</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="mn">&copy; 2025 Jake Errol Santos &middot; Valencia, Spain &middot; Automation Architect</footer>
+</div>
+
+<script>
+// SCROLL PROGRESS
+window.addEventListener('scroll',()=>{const p=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;document.getElementById('progress').style.width=p+'%';});
+
+// CURSOR GLOW
+const glow=document.getElementById('glow');
+document.addEventListener('mousemove',e=>{glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px';});
+
+// DARK MODE
+function toggleTheme(){const t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;document.getElementById('theme-icon').textContent=t==='dark'?'☀':'☽';localStorage.setItem('theme',t);}
+(()=>{const s=localStorage.getItem('theme');if(s){document.documentElement.dataset.theme=s;if(s==='dark')document.getElementById('theme-icon').textContent='☀';}})();
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('v');obs.unobserve(x.target);}});},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+// COUNTERS
+let counted=false;
+const cObs=new IntersectionObserver(e=>{if(e[0].isIntersecting&&!counted){counted=true;document.querySelectorAll('.counter').forEach(c=>{const t=+c.dataset.target,dur=1200,s=performance.now();const step=n=>{const p=Math.min((n-s)/dur,1);c.textContent=Math.floor((1-Math.pow(1-p,3))*t);if(p<1)requestAnimationFrame(step);else c.textContent=t;};requestAnimationFrame(step);});}},{threshold:.5});
+const se=document.querySelector('.stats-box');if(se)cObs.observe(se);
+
+// CASE EXPAND
+document.querySelectorAll('.case[data-case]').forEach(c=>{c.addEventListener('click',()=>{const id=c.dataset.case,d=document.getElementById(id),open=d.classList.contains('open');document.querySelectorAll('.cd.open').forEach(x=>x.classList.remove('open'));if(!open){d.classList.add('open');d.querySelectorAll('.an,.al').forEach(el=>{el.style.animation='none';el.offsetHeight;el.style.animation='';});setTimeout(()=>d.scrollIntoView({behavior:'smooth',block:'nearest'}),100);}});});
+
+// TERMINAL ANIMATION
+const lines=[
+  {text:'$ n8n workflow:execute --id intake-router',cls:'t-dim'},
+  {text:'[trigger] Webhook received: new form submission',cls:''},
+  {text:'[validate] Parsing fields... 12/12 valid ✓',cls:'t-green'},
+  {text:'[route] Case type: Contract Review → assigned to Team B',cls:'t-orange'},
+  {text:'[crm] Record created: #CAS-2847',cls:'t-green'},
+  {text:'[notify] Slack alert sent to #legal-ops',cls:'t-green'},
+  {text:'[notify] Email confirmation sent to client',cls:'t-green'},
+  {text:'[complete] Workflow executed in 1.2s — 0 errors',cls:'t-green'},
+  {text:'',cls:''},
+  {text:'$ Waiting for next trigger...',cls:'t-dim',cursor:true},
+];
+const tb=document.getElementById('term-body');
+let li=0;
+function typeLine(){if(li>=lines.length)return;const l=lines[li];const div=document.createElement('div');div.className='term-line';if(l.cursor)div.innerHTML=`<span class="${l.cls}">${l.text}</span><span class="cursor-blink"></span>`;else div.innerHTML=`<span class="${l.cls}">${l.text}</span>`;tb.appendChild(div);setTimeout(()=>{div.classList.add('vis');li++;setTimeout(typeLine,li<lines.length?400+Math.random()*300:0);},50);}
+setTimeout(typeLine,1500);
+</script>
+</body>
+</html>
