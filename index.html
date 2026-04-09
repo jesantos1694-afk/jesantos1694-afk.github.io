@@ -127,7 +127,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 .badge-deliver{background:#FEE2E2;border-color:#FCA5A5;color:#991B1B}
 .badge-output{background:#F1F5F9;border-color:#CBD5E1;color:#475569}
 /* ─── BUILD ANIMATION ─── */
-.blabel{position:absolute;background:rgba(255,255,255,.97);border:1px solid var(--border);box-shadow:0 2px 12px rgba(16,36,62,.1);font-family:'JetBrains Mono',monospace;padding:10px 16px;border-radius:10px;white-space:normal;pointer-events:none;transform:translateX(-50%);z-index:50;min-width:220px;max-width:240px;transition:opacity 600ms ease}
+.blabel{position:absolute;background:rgba(255,255,255,.97);border:1px solid var(--border);box-shadow:0 2px 12px rgba(16,36,62,.1);font-family:'JetBrains Mono',monospace;padding:10px 16px;border-radius:10px;white-space:normal;pointer-events:none;transform:translateX(-50%);z-index:50;min-width:220px;max-width:240px;transition:opacity 800ms,background 800ms,box-shadow 800ms,border-color 800ms}
+.blabel.resting{background:rgba(255,255,255,.45);border-color:rgba(185,198,215,.4);box-shadow:none;z-index:1}
 .blabel-stage{display:block;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
 .blabel-desc{display:block;font-size:11px;font-weight:400;color:var(--txt2);line-height:1.5;letter-spacing:.02em}
 @keyframes wf-spin{to{transform:rotate(360deg)}}
@@ -1719,12 +1720,16 @@ function runBuildSteps(){
       },1200);
     },600);
   },29000);
-  // Fade labels out cleanly — they served their purpose during the build sequence
+  // Labels settle to subtle resting state — stay on canvas as back layer
   setTimeout(function(){
     buildLabels.forEach(function(lab){
-      lab.style.transition='opacity 600ms ease';
-      lab.style.opacity='0';
-      setTimeout(function(){if(lab.parentNode)lab.parentNode.removeChild(lab);},650);
+      lab.style.transition='opacity 800ms,background 800ms,box-shadow 800ms,border-color 800ms';
+      lab.style.opacity='0.45';
+      lab.classList.add('resting');
+      var stageEl=lab.querySelector('.blabel-stage');
+      if(stageEl)stageEl.style.color='var(--muted)';
+      var descEl=lab.querySelector('.blabel-desc');
+      if(descEl)descEl.style.color='var(--muted)';
     });
     cvw.style.pointerEvents='';
     buildSequenceActive=false;
