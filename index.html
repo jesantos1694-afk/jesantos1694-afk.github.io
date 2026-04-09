@@ -1556,6 +1556,16 @@ function showBuildTip(msg,delay){
   },delay);
 }
 
+// Which connections to draw after each card settles (outgoing from that card)
+var CARD_CONNS={
+  'card-a':['ab'],        // a→b drawn as first link
+  'card-b':['bd','be','bg'], // b fans out to d, e, g
+  'card-c':['ac','cg'],   // a→c (back-connect) + c→g
+  'card-d':[],
+  'card-e':[],
+  'card-g':['ag']         // a→g direct path
+};
+
 function runBuildSteps(){
   buildSequenceActive=true;
   BUILD_SEQ.forEach(function(step,i){
@@ -1563,23 +1573,27 @@ function runBuildSteps(){
       // Zoom IN to this card as it reveals
       panToCard(step.id,1.15);
       revealCard(step.id,function(){
-        // After card settles: fire fx + label while still zoomed in
+        // After card settles: fire fx + label
         if(step.fx)step.fx(step.id);
         createBuildLabel(step.id,step.stage,step.color,step.desc);
+        // Activate outgoing connections with slow flowing draw-in
+        var conns=CARD_CONNS[step.id]||[];
+        conns.forEach(function(cid,ci){
+          setTimeout(function(){ activateConn(cid,900); },ci*200);
+        });
         // Zoom back out to overview after dwell (unless last card)
         var isLast=(i===BUILD_SEQ.length-1);
         if(!isLast){
           setTimeout(function(){zoomOutToOverview();},1600);
         }
       });
-      if(step.id==='card-a')setTimeout(function(){activateConn('ab',350);},300);
     },BUILD_T[i]);
   });
-  // Remaining connections + card-f after last card zooms out
+  // card-f + fa connection after last card
   setTimeout(function(){
     zoomOutToOverview();
-    ['ac','ag','bd','be','bg','cg','fa'].forEach(function(id){activateConn(id,400);});
     revealCard('card-f');
+    setTimeout(function(){activateConn('fa',900);},400);
   },17400);
   // Labels settle to subtle resting state — stay on canvas as back layer
   setTimeout(function(){
