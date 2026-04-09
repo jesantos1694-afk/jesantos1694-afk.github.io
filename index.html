@@ -1556,14 +1556,15 @@ function showBuildTip(msg,delay){
   },delay);
 }
 
-// Which connections to draw after each card settles (outgoing from that card)
+// Connections that ARRIVE at each card — draw as that card appears
+// One line flows IN to each card as it reveals, so nothing draws to invisible cards
 var CARD_CONNS={
-  'card-a':['ab'],        // a→b drawn as first link
-  'card-b':['bd','be','bg'], // b fans out to d, e, g
-  'card-c':['ac','cg'],   // a→c (back-connect) + c→g
-  'card-d':[],
-  'card-e':[],
-  'card-g':['ag']         // a→g direct path
+  'card-a':[],              // first node — no incoming yet
+  'card-b':['ab'],          // a→b arrives at b
+  'card-c':['ac'],          // a→c arrives at c
+  'card-d':['bd'],          // b→d arrives at d
+  'card-e':['be'],          // b→e arrives at e
+  'card-g':['ag','bg','cg'] // all three converge on the output node
 };
 
 function runBuildSteps(){
@@ -1576,10 +1577,11 @@ function runBuildSteps(){
         // After card settles: fire fx + label
         if(step.fx)step.fx(step.id);
         createBuildLabel(step.id,step.stage,step.color,step.desc);
-        // Activate outgoing connections with slow flowing draw-in
+        // Activate incoming connections with slow flowing draw-in
         var conns=CARD_CONNS[step.id]||[];
+        var gap=step.id==='card-g'?500:200; // stagger 3 converging lines more
         conns.forEach(function(cid,ci){
-          setTimeout(function(){ activateConn(cid,900); },ci*200);
+          setTimeout(function(){ activateConn(cid,900); },ci*gap);
         });
         // Zoom back out to overview after dwell (unless last card)
         var isLast=(i===BUILD_SEQ.length-1);
